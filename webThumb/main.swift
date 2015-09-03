@@ -7,6 +7,15 @@
 //
 
 import Foundation
+import WebKit
 
-println("Hello, World!")
+var urlArg = Process.arguments[1]
+println(urlArg)
+let webView = WebView()
+let url = NSURL(string: urlArg)
+let urlRequest = NSURLRequest(URL: url!)
 
+//webView.mainFrameURL = url
+webView.shouldUpdateWhileOffscreen = true
+webView.mainFrame.loadRequest(urlRequest)
+println("done")
