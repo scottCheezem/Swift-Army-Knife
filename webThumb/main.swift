@@ -11,12 +11,17 @@ import Cocoa
 import WebKit
 
 var urlArg = Process.arguments[1]
-print(urlArg)
+debugPrint(urlArg)
 let webView = WebView()
-webView.frame = CGRectMake(0, 0, 100, 100)
+webView.frame = CGRectMake(0, 0, 1000, 1000)
 let url = NSURL(string: urlArg)
 let urlRequest = NSURLRequest(URL: url!)
 
-//webView.mainFrameURL = url
+let webviewDelegate = WebViewDelegate()
+webView.frameLoadDelegate = webviewDelegate
+
 webView.shouldUpdateWhileOffscreen = true
 webView.mainFrame.loadRequest(urlRequest)
+
+
+CFRunLoopRun()
