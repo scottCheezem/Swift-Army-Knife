@@ -19,10 +19,10 @@ enum StateKey : String {
 enum ActionKey : String {
     case StartURL = "startUrl"
     case RegexURL = "regexUrl"
-    case SavePictureAt = "SavePictureAt"
+    case SavePicture = "savePicture"
     case Action = "takeAction"
-    case InnerText = "InnerText"
-    case OuterHTML = "OuterHTML"
+    case InnerText = "innerText"
+    case OuterHTML = "outerHtml"
     case Exit = "Exit"
 }
 
@@ -46,20 +46,61 @@ class WebViewDelegate: NSObject,WebFrameLoadDelegate {
         
         switch currentState {
             case .Begin :
-                
+                    let actionItem = (commandDict as NSDictionary).valueForKeyPath(currentState.rawValue + "." + currentAction.rawValue)
+                    let actionScript =  actionItem as? String
+                    let result = sender.windowScriptObject.evaluateWebScript(actionScript)
+                    debugPrint(result)
                     self.currentState = .WhenURLMatches
                 break;
             case .WhenURLMatches:
+                
+                let urlPatternsToActOn = commandDict[currentState.rawValue] as! [[String : AnyObject]]
+                
+                for item in urlPatternsToActOn {
+                    if let urlRegEx = item[ActionKey.RegexURL.rawValue] as? String{
+                        if (sender.mainFrameURL as NSString).rangeOfString(urlRegEx, options: .RegularExpressionSearch).length > 0 { // this isn't quite right.
+                            
+                            for (k,v) in item where k != ActionKey.RegexURL.rawValue {
+                                let actionKey = ActionKey.init(rawValue: k)! as ActionKey
+                                switch actionKey {
+                                    case .SavePicture:
+                                        break;
+                                    case .Action:
+                                        let action = v as? String //this needs to be way more exhaustive
+                                        let result = sender.windowScriptObject.evaluateWebScript(action)
+                                        debugPrint(result)
+                                        break;
+                                    case .InnerText:
+                                        print(sender.mainFrame.DOMDocument.documentElement.innerText)
+                                        break;
+                                    case .OuterHTML:
+                                        print(sender.mainFrame.DOMDocument.documentElement.outerHTML)
+                                    case .Exit:
+                                        CFRunLoopStop(CFRunLoopGetCurrent())
+                                        exit(EXIT_SUCCESS)
+                                        break;
+                                    default:
+                                        break;
+                        
+                                }
+                                
+                            }
+                            
+                            
+                        }
+                        
+                        
+                        
+                    }
+                }
+                
+                
                 break;
         }
         
         
         
-        let actionItem = (commandDict as NSDictionary).valueForKeyPath(currentState.rawValue + "." + currentAction.rawValue)
-        let actionScript =  actionItem as? String
         
-        let result = sender.windowScriptObject.evaluateWebScript(actionScript)
-        debugPrint(result)
         
         
         
