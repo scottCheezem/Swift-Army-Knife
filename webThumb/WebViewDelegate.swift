@@ -58,7 +58,7 @@ class WebViewDelegate: NSObject,WebFrameLoadDelegate {
                 
                 for item in urlPatternsToActOn {
                     if let urlRegEx = item[ActionKey.RegexURL.rawValue] as? String{
-                        if (sender.mainFrameURL as NSString).rangeOfString(urlRegEx, options: .RegularExpressionSearch).length > 0 { // this isn't quite right.
+                        if (sender.mainFrameURL as NSString).rangeOfString(urlRegEx, options: .RegularExpressionSearch).length > 0 { 
                             
                             for (k,v) in item where k != ActionKey.RegexURL.rawValue {
                                 let actionKey = ActionKey.init(rawValue: k)! as ActionKey
