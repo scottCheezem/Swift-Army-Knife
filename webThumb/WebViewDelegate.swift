@@ -15,6 +15,7 @@ enum WError : ErrorType {
     case NoBeginNode
     case NoRegEx
     case NoActions
+    case BrowserStartError
 }
 
 
@@ -103,23 +104,25 @@ class UrlAction {
 
 class AutomatedWebView: NSObject,WebFrameLoadDelegate {
 
-    weak var webView : WebView?
+    var webView : WebView?// = WebView()
 
     var currentState : StateKey = .Begin
-    var instructions:[String:AnyObject] = [:]
+//    var instructions:[String:AnyObject] = [:]
     
-    var setupAction : UrlAction?
-    var mainAction : [UrlAction]?
+    var setupAction : UrlAction?// = UrlAction(jsonDict: [:])
+    var mainAction : [UrlAction]? = []
 
     
     init(instructionJson: [String:AnyObject]) {
+        debugPrint("initing Automated Webview")
         super.init()
         do {
             try setupWithInput(instructionJson)
+            try startBrowser()
         }catch let e as NSError{
             debugPrint(e)
         }
-        startBrowser()
+        
     }
     
     func setupWithInput(instructionJson: [String:AnyObject]) throws {
@@ -140,16 +143,23 @@ class AutomatedWebView: NSObject,WebFrameLoadDelegate {
     }
     
     
-    func startBrowser(){
+    func startBrowser() throws {
+        debugPrint("Starting Browser")
         webView = WebView()
         webView?.frameLoadDelegate = self
         webView?.shouldUpdateWhileOffscreen = true
-        webView?.mainFrame.loadRequest(NSURLRequest(URL: NSURL(string: self.setupAction!.regExUrlString)!))
-        //webView.frame = CGRectMake(0, 0, 1000, 1000) // this will be for saving images of the page , or pdfs//maybe to a resize to match the content size
+        webView?.frame = CGRectMake(0, 0, 1000, 1000) // this will be for saving images of the page , or pdfs//maybe to a resize to match the content size
+        
+        guard let startingUrl = (setupAction?.regExUrlString)! as? String else {
+            throw WError.BrowserStartError
+        }
+        
+        webView?.mainFrame.loadRequest(NSURLRequest(URL: NSURL(string: startingUrl)!))
         
     }
     
     func webView(sender: WebView!, didFinishLoadForFrame frame: WebFrame!) {
+        debugPrint("loaded webview with URL:", sender.mainFrameURL)
         if currentState == .Begin{
             for browserAction in (setupAction?.actions)!{
                 browserAction.runAction(sender)

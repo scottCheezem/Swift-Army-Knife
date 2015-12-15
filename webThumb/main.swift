@@ -19,7 +19,7 @@ if Process.arguments.count > 1{
     
     do {
         fileContent = try NSString(contentsOfFile: commandFileInputArg, encoding: NSUTF8StringEncoding) as String
-        debugPrint(fileContent)
+        debugPrint("loaded: ", fileContent)
     }catch let e as NSError {
         debugPrint(e)
         print("Could not open file for reading")
