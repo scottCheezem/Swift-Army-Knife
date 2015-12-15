@@ -15,41 +15,91 @@ enum StateKey : String {
     case WhenURLMatches = "whenUrlMatches"
 }
 
-
-enum ActionKey : String {
+enum CommandKey :String {
     case StartURL = "startUrl"
     case RegexURL = "regexUrl"
+    case Actions = "actions"
+}
+
+enum ActionKey : String {
+    case RunScript = "runScript"
     case SavePicture = "savePicture"
-    case Action = "takeAction"
     case InnerText = "innerText"
     case OuterHTML = "outerHtml"
     case Exit = "Exit"
+    case Nil = ""
+}
+
+class BrowserAction {
+    var actionType : ActionKey
+    var actionElement : AnyObject
+    init(jsonDict : [String:String]){
+        actionType = .Nil
+        actionElement = 0
+        for (k,v) in jsonDict{
+            actionType = ActionKey.init(rawValue: k as String)!
+            actionElement = v
+        }
+    }
+    
+    func runAction(webview:WebView){
+        switch actionType {
+            case .SavePicture:
+                break;
+            case .RunScript:
+                webview.windowScriptObject.evaluateWebScript(actionElement as! String)
+                break;
+            case .InnerText:
+                print(webview.mainFrame.DOMDocument.documentElement.innerText)
+                break;
+            case .OuterHTML:
+                print(webview.mainFrame.DOMDocument.documentElement.outerHTML)
+            case .Exit:
+                CFRunLoopStop(CFRunLoopGetCurrent())
+                exit(EXIT_SUCCESS)
+                break;
+            default:
+                break;
+                
+        }
+    }
+    
+}
+
+class UrlAction {
+    var regExUrlString : String = ""
+    var actions : [[String:String]] = []
+    init(jsonDict : [String:AnyObject]){
+        guard let saferegExUrlString = jsonDict[CommandKey.RegexURL.rawValue] as? String else{
+            return
+        }
+        
+        regExUrlString = saferegExUrlString
+        guard let safeActions = jsonDict[CommandKey.Actions.rawValue] as? [[String:String]] else{
+            return
+        }
+        actions = safeActions
+    }
 }
 
 class WebViewDelegate: NSObject,WebFrameLoadDelegate {
 
     
     var currentState : StateKey = .Begin
-    var currentAction : ActionKey = .Action
+    var currentCommand : CommandKey = .Actions
+    
+    
     
     var commandDict:[String:AnyObject] = [:]
-//    static let startingIndexPath = "begin.takeAction"
-//    var currentIndexPath = startingIndexPath
-    
-    
     
     
     func webView(sender: WebView!, didFinishLoadForFrame frame: WebFrame!) {
         
-        //        sender.mainFrame.DOMDocument.documentElement.innerText
-        //        sender.mainFrame.DOMDocument.documentElement.outerHTML
-        
         switch currentState {
             case .Begin :
-                    let actionItem = (commandDict as NSDictionary).valueForKeyPath(currentState.rawValue + "." + currentAction.rawValue)
-                    let actionScript =  actionItem as? String
-                    let result = sender.windowScriptObject.evaluateWebScript(actionScript)
-                    debugPrint(result)
+                    let scriptItems = (commandDict as NSDictionary).valueForKeyPath(currentState.rawValue + "." + currentCommand.rawValue + "." + ActionKey.RunScript.rawValue) as! [String]
+                    let scriptString = buildScriptString(scriptItems)
+                    sender.windowScriptObject.evaluateWebScript(scriptString)
                     self.currentState = .WhenURLMatches
                 break;
             case .WhenURLMatches:
@@ -57,15 +107,15 @@ class WebViewDelegate: NSObject,WebFrameLoadDelegate {
                 let urlPatternsToActOn = commandDict[currentState.rawValue] as! [[String : AnyObject]]
                 
                 for item in urlPatternsToActOn {
-                    if let urlRegEx = item[ActionKey.RegexURL.rawValue] as? String{
-                        if (sender.mainFrameURL as NSString).rangeOfString(urlRegEx, options: .RegularExpressionSearch).length > 0 { 
-                            
-                            for (k,v) in item where k != ActionKey.RegexURL.rawValue {
+                    if let urlRegEx = item[CommandKey.RegexURL.rawValue] as? String{
+                        if (sender.mainFrameURL as NSString).rangeOfString(urlRegEx, options: .RegularExpressionSearch).length > 0 {
+                            //v is the Actions Array.
+                            for (k,v) in item where k != CommandKey.RegexURL.rawValue {
                                 let actionKey = ActionKey.init(rawValue: k)! as ActionKey
                                 switch actionKey {
                                     case .SavePicture:
                                         break;
-                                    case .Action:
+                                    case .RunScript:
                                         let action = v as? String //this needs to be way more exhaustive
                                         let result = sender.windowScriptObject.evaluateWebScript(action)
                                         debugPrint(result)
@@ -83,14 +133,8 @@ class WebViewDelegate: NSObject,WebFrameLoadDelegate {
                                         break;
                         
                                 }
-                                
                             }
-                            
-                            
                         }
-                        
-                        
-                        
                     }
                 }
                 
@@ -99,30 +143,21 @@ class WebViewDelegate: NSObject,WebFrameLoadDelegate {
         }
         
         
-        
-        
-        
-        
-        
-        
         debugPrint(sender.mainFrameURL)
-        
-//        var scriptString = "$('input[name=Distance]').filter(':last')[0].checked = true;"
-//        scriptString+="$('input[name=Zip]').val('43215');"
-//        scriptString+="$('#resultSize > option').filter(':last').attr('selected', 'selected');"
-//        scriptString+="$('input[value=\"Search for a Dentist\"]').last().click();console.log(\"testing\");"
-//        debugPrint(scriptString)
-//        
-//        let result = sender.windowScriptObject.evaluateWebScript(scriptString) as? String
-//        debugPrint(result)
-        
-        
-        
-        //read from the commandDict looking for the ActionCommndKeys, and response appropirately
-        
-        
         
         
     }
     
+    func buildScriptString(array:[String]) -> String {
+        var result = ""
+        for scriptString in array {
+            result += scriptString
+        }
+        return result
+    }
+    
 }
+
+
+
+
