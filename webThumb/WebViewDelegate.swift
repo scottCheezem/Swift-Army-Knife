@@ -10,13 +10,20 @@ import Cocoa
 import Foundation
 import WebKit
 
+
+enum WError : ErrorType {
+    case NoBeginNode
+    case NoRegEx
+    case NoActions
+}
+
+
 enum StateKey : String {
     case Begin = "begin"
     case WhenURLMatches = "whenUrlMatches"
 }
 
 enum CommandKey :String {
-    case StartURL = "startUrl"
     case RegexURL = "regexUrl"
     case Actions = "actions"
 }
@@ -28,8 +35,16 @@ enum ActionKey : String {
     case OuterHTML = "outerHtml"
     case Exit = "Exit"
     case Nil = ""
+    //it would be great to have a query selector here.
 }
 
+infix operator =~ {}
+func =~(string:String, regex:String) -> Bool {
+    return string.rangeOfString(regex, options:.RegularExpressionSearch) != nil
+}
+
+
+//a Key-Value pair representing some atomic thing that can be automated in the page.
 class BrowserAction {
     var actionType : ActionKey
     var actionElement : AnyObject
@@ -41,7 +56,7 @@ class BrowserAction {
             actionElement = v
         }
     }
-    
+    //this could be in an extension to a protocol or something...
     func runAction(webview:WebView){
         switch actionType {
             case .SavePicture:
@@ -66,9 +81,11 @@ class BrowserAction {
     
 }
 
+
+// A UrlAction is a regular expression to match on page load, and some actions to take
 class UrlAction {
     var regExUrlString : String = ""
-    var actions : [[String:String]] = []
+    var actions : [BrowserAction] = []
     init(jsonDict : [String:AnyObject]){
         guard let saferegExUrlString = jsonDict[CommandKey.RegexURL.rawValue] as? String else{
             return
@@ -78,83 +95,77 @@ class UrlAction {
         guard let safeActions = jsonDict[CommandKey.Actions.rawValue] as? [[String:String]] else{
             return
         }
-        actions = safeActions
+        for jsonDict in safeActions{
+            actions.append(BrowserAction.init(jsonDict: jsonDict))
+        }
     }
 }
 
-class WebViewDelegate: NSObject,WebFrameLoadDelegate {
+class AutomatedWebView: NSObject,WebFrameLoadDelegate {
+
+    weak var webView : WebView?
+
+    var currentState : StateKey = .Begin
+    var instructions:[String:AnyObject] = [:]
+    
+    var setupAction : UrlAction?
+    var mainAction : [UrlAction]?
 
     
-    var currentState : StateKey = .Begin
-    var currentCommand : CommandKey = .Actions
+    init(instructionJson: [String:AnyObject]) {
+        super.init()
+        do {
+            try setupWithInput(instructionJson)
+        }catch let e as NSError{
+            debugPrint(e)
+        }
+        startBrowser()
+    }
+    
+    func setupWithInput(instructionJson: [String:AnyObject]) throws {
+        guard let safeBeginDict = instructionJson[StateKey.Begin.rawValue] as? [String:AnyObject] else{
+            throw WError.NoBeginNode
+        }
+        
+        setupAction = UrlAction(jsonDict: safeBeginDict)
+        
+        guard let safeMainLoopDict = instructionJson[StateKey.WhenURLMatches.rawValue] as? [[String:AnyObject]] else {
+            throw WError.NoRegEx
+        }
+        
+        for urlActionDict in safeMainLoopDict{
+            mainAction?.append(UrlAction(jsonDict: urlActionDict))
+        }
+
+    }
     
     
-    
-    var commandDict:[String:AnyObject] = [:]
-    
+    func startBrowser(){
+        webView = WebView()
+        webView?.frameLoadDelegate = self
+        webView?.shouldUpdateWhileOffscreen = true
+        webView?.mainFrame.loadRequest(NSURLRequest(URL: NSURL(string: self.setupAction!.regExUrlString)!))
+        //webView.frame = CGRectMake(0, 0, 1000, 1000) // this will be for saving images of the page , or pdfs//maybe to a resize to match the content size
+        
+    }
     
     func webView(sender: WebView!, didFinishLoadForFrame frame: WebFrame!) {
-        
-        switch currentState {
-            case .Begin :
-                    let scriptItems = (commandDict as NSDictionary).valueForKeyPath(currentState.rawValue + "." + currentCommand.rawValue + "." + ActionKey.RunScript.rawValue) as! [String]
-                    let scriptString = buildScriptString(scriptItems)
-                    sender.windowScriptObject.evaluateWebScript(scriptString)
-                    self.currentState = .WhenURLMatches
-                break;
-            case .WhenURLMatches:
-                
-                let urlPatternsToActOn = commandDict[currentState.rawValue] as! [[String : AnyObject]]
-                
-                for item in urlPatternsToActOn {
-                    if let urlRegEx = item[CommandKey.RegexURL.rawValue] as? String{
-                        if (sender.mainFrameURL as NSString).rangeOfString(urlRegEx, options: .RegularExpressionSearch).length > 0 {
-                            //v is the Actions Array.
-                            for (k,v) in item where k != CommandKey.RegexURL.rawValue {
-                                let actionKey = ActionKey.init(rawValue: k)! as ActionKey
-                                switch actionKey {
-                                    case .SavePicture:
-                                        break;
-                                    case .RunScript:
-                                        let action = v as? String //this needs to be way more exhaustive
-                                        let result = sender.windowScriptObject.evaluateWebScript(action)
-                                        debugPrint(result)
-                                        break;
-                                    case .InnerText:
-                                        print(sender.mainFrame.DOMDocument.documentElement.innerText)
-                                        break;
-                                    case .OuterHTML:
-                                        print(sender.mainFrame.DOMDocument.documentElement.outerHTML)
-                                    case .Exit:
-                                        CFRunLoopStop(CFRunLoopGetCurrent())
-                                        exit(EXIT_SUCCESS)
-                                        break;
-                                    default:
-                                        break;
-                        
-                                }
-                            }
-                        }
-                    }
+        if currentState == .Begin{
+            for browserAction in (setupAction?.actions)!{
+                browserAction.runAction(sender)
+            }
+            currentState = .WhenURLMatches
+        }else if currentState == .WhenURLMatches{
+            for urlAction in mainAction! where sender.mainFrameURL =~ urlAction.regExUrlString {
+                for browserAction in urlAction.actions {
+                    browserAction.runAction(sender)
                 }
-                
-                
-                break;
+            }
+            
+            
         }
-        
-        
-        debugPrint(sender.mainFrameURL)
-        
-        
     }
     
-    func buildScriptString(array:[String]) -> String {
-        var result = ""
-        for scriptString in array {
-            result += scriptString
-        }
-        return result
-    }
     
 }
 
