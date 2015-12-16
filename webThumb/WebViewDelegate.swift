@@ -12,7 +12,11 @@ import WebKit
 
 infix operator =~ {}
 func =~(string:String, regex:String) -> Bool {
-    return string.rangeOfString(regex, options:.RegularExpressionSearch) != nil
+    if let range = string.rangeOfString(regex, options:.RegularExpressionSearch){
+        debugPrint("matched on :",string.substringWithRange(range))
+        return true
+    }
+    return false
 }
 
 enum WError : ErrorType {
@@ -53,7 +57,7 @@ class BrowserAction {
         actionType = .Nil
         actionElement = 0
         for (k,v) in jsonDict{
-            debugPrint("Building action with ", k, ":", v)
+//            debugPrint("Building action with ", k, ":", v)
             actionType = ActionKey.init(rawValue: k as String)!
             actionElement = v
         }
@@ -95,6 +99,7 @@ class UrlAction {
         
         regExUrlString = saferegExUrlString
         guard let safeActions = jsonDict[CommandKey.Actions.rawValue] as? [[String:AnyObject]] else{
+            debugPrint("couldn't parse", jsonDict)
             return
         }
         for jsonDict in safeActions{
@@ -113,7 +118,7 @@ class AutomatedWebView: NSObject,WebFrameLoadDelegate {
 
     
     init(instructionJson: [String:AnyObject]) {
-        debugPrint("initing Automated Webview")
+//        debugPrint("initing Automated Webview")
         super.init()
         do {
             try setupWithInput(instructionJson)
@@ -135,6 +140,7 @@ class AutomatedWebView: NSObject,WebFrameLoadDelegate {
         }
         
         for urlActionDict in safeMainLoopDict{
+//            debugPrint("Building URLAction with :",urlActionDict)
             mainAction?.append(UrlAction(jsonDict: urlActionDict))
         }
 
@@ -144,7 +150,8 @@ class AutomatedWebView: NSObject,WebFrameLoadDelegate {
     
     func webView(sender: WebView!, didFinishLoadForFrame frame: WebFrame!) {
         debugPrint("loaded webview with URL:", sender.mainFrameURL)
-        debugPrint(currentStep)
+        debugPrint("but then theres this ", frame.dataSource?.initialRequest.URL?.absoluteString)
+        debugPrint("but then theres also this ", frame.dataSource?.request.URL?.absoluteString)
         if currentStep == StateKey.Begin{
             for browserAction in (setupAction?.actions)!{
                 browserAction.runAction(sender)

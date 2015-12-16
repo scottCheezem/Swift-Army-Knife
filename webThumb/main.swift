@@ -47,7 +47,7 @@ let startingUrl = NSURL(string : startingUrlString!)
 let startingUrlRequest = NSURLRequest(URL: startingUrl!)
 
 
-debugPrint("loading ", startingUrlString)
+//debugPrint("loading ", startingUrlString)
 webView.mainFrame.loadRequest(startingUrlRequest)
 webView.frameLoadDelegate = webViewLoadDelegate
 
