@@ -10,6 +10,10 @@ import Cocoa
 import Foundation
 import WebKit
 
+infix operator =~ {}
+func =~(string:String, regex:String) -> Bool {
+    return string.rangeOfString(regex, options:.RegularExpressionSearch) != nil
+}
 
 enum WError : ErrorType {
     case NoBeginNode
@@ -39,20 +43,17 @@ enum ActionKey : String {
     //it would be great to have a query selector here.
 }
 
-infix operator =~ {}
-func =~(string:String, regex:String) -> Bool {
-    return string.rangeOfString(regex, options:.RegularExpressionSearch) != nil
-}
 
 
 //a Key-Value pair representing some atomic thing that can be automated in the page.
 class BrowserAction {
     var actionType : ActionKey
     var actionElement : AnyObject
-    init(jsonDict : [String:String]){
+    init(jsonDict : [String:AnyObject]){
         actionType = .Nil
         actionElement = 0
         for (k,v) in jsonDict{
+            debugPrint("Building action with ", k, ":", v)
             actionType = ActionKey.init(rawValue: k as String)!
             actionElement = v
         }
@@ -93,7 +94,7 @@ class UrlAction {
         }
         
         regExUrlString = saferegExUrlString
-        guard let safeActions = jsonDict[CommandKey.Actions.rawValue] as? [[String:String]] else{
+        guard let safeActions = jsonDict[CommandKey.Actions.rawValue] as? [[String:AnyObject]] else{
             return
         }
         for jsonDict in safeActions{
@@ -104,12 +105,10 @@ class UrlAction {
 
 class AutomatedWebView: NSObject,WebFrameLoadDelegate {
 
-    var webView : WebView?// = WebView()
 
-    var currentState : StateKey = .Begin
-//    var instructions:[String:AnyObject] = [:]
-    
-    var setupAction : UrlAction?// = UrlAction(jsonDict: [:])
+
+    var currentStep : StateKey = StateKey.Begin
+    var setupAction : UrlAction?
     var mainAction : [UrlAction]? = []
 
     
@@ -118,11 +117,10 @@ class AutomatedWebView: NSObject,WebFrameLoadDelegate {
         super.init()
         do {
             try setupWithInput(instructionJson)
-            try startBrowser()
         }catch let e as NSError{
             debugPrint(e)
         }
-        
+
     }
     
     func setupWithInput(instructionJson: [String:AnyObject]) throws {
@@ -143,29 +141,16 @@ class AutomatedWebView: NSObject,WebFrameLoadDelegate {
     }
     
     
-    func startBrowser() throws {
-        debugPrint("Starting Browser")
-        webView = WebView()
-        webView?.frameLoadDelegate = self
-        webView?.shouldUpdateWhileOffscreen = true
-        webView?.frame = CGRectMake(0, 0, 1000, 1000) // this will be for saving images of the page , or pdfs//maybe to a resize to match the content size
-        
-        guard let startingUrl = (setupAction?.regExUrlString)! as? String else {
-            throw WError.BrowserStartError
-        }
-        
-        webView?.mainFrame.loadRequest(NSURLRequest(URL: NSURL(string: startingUrl)!))
-        
-    }
     
     func webView(sender: WebView!, didFinishLoadForFrame frame: WebFrame!) {
         debugPrint("loaded webview with URL:", sender.mainFrameURL)
-        if currentState == .Begin{
+        debugPrint(currentStep)
+        if currentStep == StateKey.Begin{
             for browserAction in (setupAction?.actions)!{
                 browserAction.runAction(sender)
             }
-            currentState = .WhenURLMatches
-        }else if currentState == .WhenURLMatches{
+            currentStep = StateKey.WhenURLMatches
+        }else if currentStep == StateKey.WhenURLMatches{
             for urlAction in mainAction! where sender.mainFrameURL =~ urlAction.regExUrlString {
                 for browserAction in urlAction.actions {
                     browserAction.runAction(sender)
