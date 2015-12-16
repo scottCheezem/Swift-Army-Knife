@@ -40,6 +40,7 @@ enum CommandKey :String {
 enum ActionKey : String {
     case RunScript = "runScript"
     case SavePicture = "savePicture"
+    case Wait = "wait"
     case InnerText = "innerText"
     case OuterHTML = "outerHtml"
     case Exit = "Exit"
@@ -65,23 +66,32 @@ class BrowserAction {
     //this could be in an extension to a protocol or something...
     func runAction(webview:WebView){
         switch actionType {
-            case .SavePicture:
-                break;
-            case .RunScript:
-                webview.windowScriptObject.evaluateWebScript(actionElement as! String)
-                break;
-            case .InnerText:
-                print(webview.mainFrame.DOMDocument.documentElement.innerText)
-                break;
-            case .OuterHTML:
-                print(webview.mainFrame.DOMDocument.documentElement.outerHTML)
-            case .Exit:
-                CFRunLoopStop(CFRunLoopGetCurrent())
-                exit(EXIT_SUCCESS)
-                break;
-            default:
-                break;
-                
+        case .SavePicture:
+            break;
+        case .RunScript:
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                let result = webview.stringByEvaluatingJavaScriptFromString(self.actionElement as! String)
+                debugPrint(result)
+            })
+            break;
+        case .InnerText:
+            print(webview.mainFrame.DOMDocument.documentElement.innerText)
+            break;
+        case .OuterHTML:
+            print(webview.mainFrame.DOMDocument.documentElement.outerHTML)
+        case .Exit:
+            CFRunLoopStop(CFRunLoopGetCurrent())
+            exit(EXIT_SUCCESS)
+            break;
+        case .Wait:
+            //this no longer seems needed, but would be nice to have in case this is ever a legit testing enginge.
+            let delay:dispatch_time_t = UInt64(actionElement as! Int)
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (Int64)(delay * NSEC_PER_SEC)), dispatch_get_main_queue(), { () -> Void in
+                debugPrint("done waiting");
+            })
+        default:
+            break;
+            
         }
     }
     
