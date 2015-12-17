@@ -75,13 +75,19 @@ class BrowserAction {
             })
             break;
         case .InnerText:
-            print(webview.mainFrame.DOMDocument.documentElement.innerText)
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        print(webview.mainFrame.DOMDocument.documentElement.innerText)
+            });
             break;
         case .OuterHTML:
-            print(webview.mainFrame.DOMDocument.documentElement.outerHTML)
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                print(webview.mainFrame.DOMDocument.documentElement.outerHTML)
+            })
         case .Exit:
-            CFRunLoopStop(CFRunLoopGetCurrent())
-            exit(EXIT_SUCCESS)
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                CFRunLoopStop(CFRunLoopGetCurrent())
+                exit(EXIT_SUCCESS)
+            });
             break;
         case .Wait:
             //this no longer seems needed, but would be nice to have in case this is ever a legit testing enginge.
