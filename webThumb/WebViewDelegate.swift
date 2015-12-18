@@ -43,9 +43,10 @@ enum ActionKey : String {
     case Wait = "wait"
     case InnerText = "innerText"
     case OuterHTML = "outerHtml"
+    case DomQueryAll = "domQueryAll"
+    case DomQuery = "domQuery"
     case Exit = "Exit"
     case Nil = ""
-    //it would be great to have a query selector here.
 }
 
 
@@ -95,6 +96,21 @@ class BrowserAction {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (Int64)(delay * NSEC_PER_SEC)), dispatch_get_main_queue(), { () -> Void in
                 debugPrint("done waiting");
             })
+        case .DomQueryAll:
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                let domNodes = webview.mainFrame.DOMDocument.querySelectorAll(self.actionElement as! String)
+                for  index in 0...domNodes.length-1{
+                    //                    print(domNodes.item(index).textContent)
+                    print(domNodes.item(index).parentElement.innerText)
+                }
+            })
+            break;
+        case .DomQuery:
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                let domElement = webview.mainFrame.DOMDocument.querySelector(self.actionElement as! String)
+                print(domElement.innerHTML)
+            })
+            break
         default:
             break;
             
@@ -126,12 +142,9 @@ class UrlAction {
 
 class AutomatedWebView: NSObject,WebFrameLoadDelegate {
 
-
-
     var currentStep : StateKey = StateKey.Begin
     var setupAction : UrlAction?
     var mainAction : [UrlAction]? = []
-
     
     init(instructionJson: [String:AnyObject]) {
 //        debugPrint("initing Automated Webview")
@@ -156,18 +169,14 @@ class AutomatedWebView: NSObject,WebFrameLoadDelegate {
         }
         
         for urlActionDict in safeMainLoopDict{
-//            debugPrint("Building URLAction with :",urlActionDict)
             mainAction?.append(UrlAction(jsonDict: urlActionDict))
         }
 
     }
     
-    
-    
     func webView(sender: WebView!, didFinishLoadForFrame frame: WebFrame!) {
         debugPrint("loaded webview with URL:", sender.mainFrameURL)
-        debugPrint("but then theres this ", frame.dataSource?.initialRequest.URL?.absoluteString)
-        debugPrint("but then theres also this ", frame.dataSource?.request.URL?.absoluteString)
+        
         if currentStep == StateKey.Begin{
             for browserAction in (setupAction?.actions)!{
                 browserAction.runAction(sender)
