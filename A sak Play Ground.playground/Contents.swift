@@ -21,17 +21,13 @@ let webViewLoadDelegate = AutomatedWebView(instructionJson: commandDict!)
 
 let webView = WebView()
 webView.shouldUpdateWhileOffscreen = true
-webView.frame = CGRectMake(0, 0, 1000, 2000) 
 
 let startingUrlString = webViewLoadDelegate.setupAction?.regExUrlString
 let startingUrl = NSURL(string : startingUrlString!)
 let startingUrlRequest = NSURLRequest(URL: startingUrl!)
 
-
 debugPrint("loading ", startingUrlString)
 webView.mainFrame.loadRequest(startingUrlRequest)
 webView.frameLoadDelegate = webViewLoadDelegate
-
-webView.mainFrame.DOMDocument
 
 XCPlaygroundPage.currentPage.liveView = webView
