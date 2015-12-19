@@ -27,7 +27,7 @@
 
 /* Begin PBXFileReference section */
 		06726B541C1B5D5500E5DFC0 /* WebViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewDelegate.swift; sourceTree = "<group>"; };
-		06C2E8711B98C96B001AF5B4 /* webThumb */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = webThumb; sourceTree = BUILT_PRODUCTS_DIR; };
+		06C2E8711B98C96B001AF5B4 /* Swift Army Knife */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Swift Army Knife"; sourceTree = BUILT_PRODUCTS_DIR; };
 		06C2E8741B98C96B001AF5B4 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		06DA7E371C1E53FF00DE03BA /* StreamScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamScanner.swift; sourceTree = "<group>"; };
 		06DA7E391C1E5CC100DE03BA /* String+stringToJson.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+stringToJson.swift"; sourceTree = "<group>"; };
@@ -55,7 +55,7 @@
 		06C2E8721B98C96B001AF5B4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				06C2E8711B98C96B001AF5B4 /* webThumb */,
+				06C2E8711B98C96B001AF5B4 /* Swift Army Knife */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -74,9 +74,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		06C2E8701B98C96B001AF5B4 /* webThumb */ = {
+		06C2E8701B98C96B001AF5B4 /* Swift Army Knife */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 06C2E8781B98C96B001AF5B4 /* Build configuration list for PBXNativeTarget "webThumb" */;
+			buildConfigurationList = 06C2E8781B98C96B001AF5B4 /* Build configuration list for PBXNativeTarget "Swift Army Knife" */;
 			buildPhases = (
 				06C2E86D1B98C96B001AF5B4 /* Sources */,
 				06C2E86E1B98C96B001AF5B4 /* Frameworks */,
@@ -86,9 +86,9 @@
 			);
 			dependencies = (
 			);
-			name = webThumb;
+			name = "Swift Army Knife";
 			productName = webThumb;
-			productReference = 06C2E8711B98C96B001AF5B4 /* webThumb */;
+			productReference = 06C2E8711B98C96B001AF5B4 /* Swift Army Knife */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -107,7 +107,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 06C2E86C1B98C96B001AF5B4 /* Build configuration list for PBXProject "webThumb" */;
+			buildConfigurationList = 06C2E86C1B98C96B001AF5B4 /* Build configuration list for PBXProject "Swift Army Knife" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -119,7 +119,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				06C2E8701B98C96B001AF5B4 /* webThumb */,
+				06C2E8701B98C96B001AF5B4 /* Swift Army Knife */,
 			);
 		};
 /* End PBXProject section */
@@ -221,21 +221,21 @@
 		06C2E8791B98C96B001AF5B4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = sak;
 			};
 			name = Debug;
 		};
 		06C2E87A1B98C96B001AF5B4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = sak;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		06C2E86C1B98C96B001AF5B4 /* Build configuration list for PBXProject "webThumb" */ = {
+		06C2E86C1B98C96B001AF5B4 /* Build configuration list for PBXProject "Swift Army Knife" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				06C2E8761B98C96B001AF5B4 /* Debug */,
@@ -244,7 +244,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		06C2E8781B98C96B001AF5B4 /* Build configuration list for PBXNativeTarget "webThumb" */ = {
+		06C2E8781B98C96B001AF5B4 /* Build configuration list for PBXNativeTarget "Swift Army Knife" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				06C2E8791B98C96B001AF5B4 /* Debug */,

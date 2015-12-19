@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:webThumb.xcodeproj">
+      location = "self:/Users/scottcheezem/Dev/webThumb/Swift Army Knife.xcodeproj">
    </FileRef>
 </Workspace>
