@@ -27,7 +27,7 @@
 
 /* Begin PBXFileReference section */
 		06726B541C1B5D5500E5DFC0 /* WebViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewDelegate.swift; sourceTree = "<group>"; };
-		06C2E8711B98C96B001AF5B4 /* Swift Army Knife */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Swift Army Knife"; sourceTree = BUILT_PRODUCTS_DIR; };
+		06C2E8711B98C96B001AF5B4 /* Swift Army Knife */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = "Swift Army Knife"; path = sak; sourceTree = BUILT_PRODUCTS_DIR; };
 		06C2E8741B98C96B001AF5B4 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		06DA7E371C1E53FF00DE03BA /* StreamScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamScanner.swift; sourceTree = "<group>"; };
 		06DA7E391C1E5CC100DE03BA /* String+stringToJson.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+stringToJson.swift"; sourceTree = "<group>"; };
@@ -47,7 +47,7 @@
 		06C2E8681B98C96B001AF5B4 = {
 			isa = PBXGroup;
 			children = (
-				06C2E8731B98C96B001AF5B4 /* webThumb */,
+				06C2E8731B98C96B001AF5B4 /* Swift Army Knife */,
 				06C2E8721B98C96B001AF5B4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -60,7 +60,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		06C2E8731B98C96B001AF5B4 /* webThumb */ = {
+		06C2E8731B98C96B001AF5B4 /* Swift Army Knife */ = {
 			isa = PBXGroup;
 			children = (
 				06C2E8741B98C96B001AF5B4 /* main.swift */,
@@ -68,7 +68,7 @@
 				06DA7E371C1E53FF00DE03BA /* StreamScanner.swift */,
 				06DA7E391C1E5CC100DE03BA /* String+stringToJson.swift */,
 			);
-			path = webThumb;
+			path = "Swift Army Knife";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
