@@ -122,8 +122,8 @@ class BrowserAction {
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 let domNodes = webview.mainFrame.DOMDocument.querySelectorAll(self.actionElement as! String)
                 for  index in 0...domNodes.length-1{
-                    //                    print(domNodes.item(index).textContent)
-                    print(domNodes.item(index).parentElement.innerHTML)
+                    let domElement = domNodes.item(index) as! DOMElement
+                    print(domElement.innerHTML)
                 }
             })
             break;
