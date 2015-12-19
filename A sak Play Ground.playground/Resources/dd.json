@@ -1,0 +1,26 @@
+{
+"begin":{
+		"regexUrl":"https://www.deltadental.com/DentistSearch/DentistSearchController.ccl" ,
+		"actions": [
+				 {"runScript": "$('input[name=Distance]').filter(':last')[0].checked = true;$('input[name=Zip]').val('43215');"},
+				 {"runScript": "$('#resultSize > option').filter(':last').attr('selected', 'selected');"},
+				 {"runScript": "$('input[value=\"Search for a Dentist\"]').last().click();"}
+			 ]
+	},
+ "whenUrlMatches":[
+	 	{
+	 		"regexUrl":"https://www.deltadental.com/DentistSearch/DentistSearchController.ccl;jsessionid=.*$",
+		 	"actions":[
+			 	 {"runScript":"$('a.[href=\"/DentistSearch/DentistSearchController.ccl?Action=PrinterFriendlySearchResultsAction&DView=DentistSearchPrinter\"]')[0].click()"}
+			 	 ]
+       },
+       {
+       "regexUrl":"https://www.deltadental.com/DentistSearch/DentistSearchController.ccl\\?Action=PrinterFriendlySearchResultsAction&DView=DentistSearchPrinter",
+       "actions":[
+                  {"domQueryAll":"tr.stripedRow"},
+                  {"Exit":1}
+                  ]
+       
+       }
+	]
+}
