@@ -40,12 +40,15 @@ enum CommandKey :String {
 enum ActionKey : String {
     case RunScript = "runScript"
     case SavePicture = "savePicture"
+    case SaveWebArchive = "saveWebArcive"
+    case SavePdf = "savePdf"
     case Wait = "wait"
     case InnerText = "innerText"
     case OuterHTML = "outerHtml"
     case DomQueryAll = "domQueryAll"
     case DomQuery = "domQuery"
     case Exit = "Exit"
+    case DebugPrint = "debugPrint"
     case Nil = ""
 }
 
@@ -68,6 +71,25 @@ class BrowserAction {
     func runAction(webview:WebView){
         switch actionType {
         case .SavePicture:
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                let imagerep = webview.bitmapImageRepForCachingDisplayInRect(webview.frame)
+                webview.cacheDisplayInRect(webview.frame, toBitmapImageRep: imagerep!)
+                
+                //            let imageOfWebView = NSImage(size: webview.frame.size)
+                //            imageOfWebView.addRepresentation(imagerep!)
+                let imageData = imagerep?.representationUsingType(.NSPNGFileType, properties: [:])
+                
+                
+                do {
+                    try imageData?.writeToFile(self.actionElement as! String, options: .AtomicWrite)
+                }catch let e as NSError{
+                    debugPrint(e)
+                }
+                
+                //now write to a file
+
+            })
+            
             break;
         case .RunScript:
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -77,7 +99,7 @@ class BrowserAction {
             break;
         case .InnerText:
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        print(webview.mainFrame.DOMDocument.documentElement.innerText)
+                print(webview.mainFrame.DOMDocument.documentElement.innerText)
             });
             break;
         case .OuterHTML:
@@ -101,7 +123,7 @@ class BrowserAction {
                 let domNodes = webview.mainFrame.DOMDocument.querySelectorAll(self.actionElement as! String)
                 for  index in 0...domNodes.length-1{
                     //                    print(domNodes.item(index).textContent)
-                    print(domNodes.item(index).parentElement.innerText)
+                    print(domNodes.item(index).parentElement.innerHTML)
                 }
             })
             break;

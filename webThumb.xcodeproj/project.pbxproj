@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		06726B551C1B5D5500E5DFC0 /* WebViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06726B541C1B5D5500E5DFC0 /* WebViewDelegate.swift */; };
 		06C2E8751B98C96B001AF5B4 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C2E8741B98C96B001AF5B4 /* main.swift */; };
-		06DA7E361C1E52AB00DE03BA /* Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06DA7E351C1E52AB00DE03BA /* Regex.swift */; };
 		06DA7E381C1E53FF00DE03BA /* StreamScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06DA7E371C1E53FF00DE03BA /* StreamScanner.swift */; };
 		06DA7E3A1C1E5CC100DE03BA /* String+stringToJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06DA7E391C1E5CC100DE03BA /* String+stringToJson.swift */; };
 /* End PBXBuildFile section */
@@ -30,7 +29,6 @@
 		06726B541C1B5D5500E5DFC0 /* WebViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewDelegate.swift; sourceTree = "<group>"; };
 		06C2E8711B98C96B001AF5B4 /* webThumb */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = webThumb; sourceTree = BUILT_PRODUCTS_DIR; };
 		06C2E8741B98C96B001AF5B4 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		06DA7E351C1E52AB00DE03BA /* Regex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Regex.swift; sourceTree = "<group>"; };
 		06DA7E371C1E53FF00DE03BA /* StreamScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamScanner.swift; sourceTree = "<group>"; };
 		06DA7E391C1E5CC100DE03BA /* String+stringToJson.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+stringToJson.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -67,7 +65,6 @@
 			children = (
 				06C2E8741B98C96B001AF5B4 /* main.swift */,
 				06726B541C1B5D5500E5DFC0 /* WebViewDelegate.swift */,
-				06DA7E351C1E52AB00DE03BA /* Regex.swift */,
 				06DA7E371C1E53FF00DE03BA /* StreamScanner.swift */,
 				06DA7E391C1E5CC100DE03BA /* String+stringToJson.swift */,
 			);
@@ -136,7 +133,6 @@
 				06726B551C1B5D5500E5DFC0 /* WebViewDelegate.swift in Sources */,
 				06DA7E3A1C1E5CC100DE03BA /* String+stringToJson.swift in Sources */,
 				06C2E8751B98C96B001AF5B4 /* main.swift in Sources */,
-				06DA7E361C1E52AB00DE03BA /* Regex.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
