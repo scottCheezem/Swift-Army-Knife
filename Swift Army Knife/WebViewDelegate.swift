@@ -72,12 +72,22 @@ public class BrowserAction {
         switch actionType {
         case .SavePicture:
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                let imagerep = webview.bitmapImageRepForCachingDisplayInRect(webview.frame)
-                webview.cacheDisplayInRect(webview.frame, toBitmapImageRep: imagerep!)
+                
+                webview.mainFrame.frameView.allowsScrolling = false//this might need to be set by default.
+                
+                let webFrameRect = webview.mainFrame.frameView.documentView.frame
+                webview.frame = webFrameRect
+                
+                
+                
+                guard let imagerep = webview.bitmapImageRepForCachingDisplayInRect(webview.frame) else{
+                    return
+                }
+                webview.cacheDisplayInRect(webview.frame, toBitmapImageRep: imagerep)
                 
                 //            let imageOfWebView = NSImage(size: webview.frame.size)
                 //            imageOfWebView.addRepresentation(imagerep!)
-                let imageData = imagerep?.representationUsingType(.NSPNGFileType, properties: [:])
+                let imageData = imagerep.representationUsingType(.NSPNGFileType, properties: [:])
                 
                 
                 do {
@@ -85,8 +95,6 @@ public class BrowserAction {
                 }catch let e as NSError{
                     debugPrint(e)
                 }
-                
-                //now write to a file
 
             })
             

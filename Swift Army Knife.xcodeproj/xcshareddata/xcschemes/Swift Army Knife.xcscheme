@@ -77,7 +77,7 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "/Users/scottcheezem/dd.json"
+            argument = "&quot;/Users/scottcheezem/Dev/Swift Army Knife/A sak Play Ground.playground/Resources/dd.json&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

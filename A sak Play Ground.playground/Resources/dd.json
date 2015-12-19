@@ -18,6 +18,7 @@
        "regexUrl":"https://www.deltadental.com/DentistSearch/DentistSearchController.ccl\\?Action=PrinterFriendlySearchResultsAction&DView=DentistSearchPrinter",
        "actions":[
                   {"domQueryAll":"tr.stripedRow"},
+                  {"savePicture":"test.png"},
                   {"Exit":1}
                   ]
        
