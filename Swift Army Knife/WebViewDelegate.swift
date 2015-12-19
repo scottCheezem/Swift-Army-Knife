@@ -13,7 +13,7 @@ import WebKit
 infix operator =~ {}
 func =~(string:String, regex:String) -> Bool {
     if let range = string.rangeOfString(regex, options:.RegularExpressionSearch){
-        debugPrint("matched on :",string.substringWithRange(range))
+        NSLog("matched on :%@",string.substringWithRange(range))
         return true
     }
     return false
@@ -174,7 +174,7 @@ public class AutomatedWebView: NSObject,WebFrameLoadDelegate {
         do {
             try setupWithInput(instructionJson)
         }catch let e as NSError{
-            debugPrint(e)
+            NSLog("%@", e)
         }
 
     }
@@ -197,8 +197,7 @@ public class AutomatedWebView: NSObject,WebFrameLoadDelegate {
     }
     
     public func webView(sender: WebView!, didFinishLoadForFrame frame: WebFrame!) {
-        debugPrint("loaded webview with URL:", sender.mainFrameURL)
-        
+        NSLog("loaded webview with URL:%@", sender.mainFrameURL)
         if currentStep == StateKey.Begin{
             for browserAction in (setupAction?.actions)!{
                 browserAction.runAction(sender)
