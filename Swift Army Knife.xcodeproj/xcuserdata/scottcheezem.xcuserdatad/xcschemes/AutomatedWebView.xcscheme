@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "06C2E8701B98C96B001AF5B4"
-               BuildableName = "sak"
-               BlueprintName = "Swift Army Knife"
+               BlueprintIdentifier = "063ACAD11C25CDAE004CB5E3"
+               BuildableName = "AutomatedWebView.framework"
+               BlueprintName = "AutomatedWebView"
                ReferencedContainer = "container:Swift Army Knife.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -29,15 +29,6 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "06C2E8701B98C96B001AF5B4"
-            BuildableName = "sak"
-            BlueprintName = "Swift Army Knife"
-            ReferencedContainer = "container:Swift Army Knife.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -51,22 +42,15 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "06C2E8701B98C96B001AF5B4"
-            BuildableName = "sak"
-            BlueprintName = "Swift Army Knife"
+            BlueprintIdentifier = "063ACAD11C25CDAE004CB5E3"
+            BuildableName = "AutomatedWebView.framework"
+            BlueprintName = "AutomatedWebView"
             ReferencedContainer = "container:Swift Army Knife.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
-      <CommandLineArguments>
-         <CommandLineArgument
-            argument = "/Users/scottcheezem/dd.json"
-            isEnabled = "YES">
-         </CommandLineArgument>
-      </CommandLineArguments>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -76,16 +60,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "06C2E8701B98C96B001AF5B4"
-            BuildableName = "sak"
-            BlueprintName = "Swift Army Knife"
+            BlueprintIdentifier = "063ACAD11C25CDAE004CB5E3"
+            BuildableName = "AutomatedWebView.framework"
+            BlueprintName = "AutomatedWebView"
             ReferencedContainer = "container:Swift Army Knife.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

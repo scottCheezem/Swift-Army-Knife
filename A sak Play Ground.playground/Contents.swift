@@ -2,7 +2,7 @@ import Darwin
 import Foundation
 import WebKit
 import XCPlayground
-
+import AutomatedWebView
 
 // get the file path for the file "test.json" in the playground bundle
 let filePath = NSBundle.mainBundle().pathForResource("dd", ofType: "json")

@@ -7,10 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		06726B551C1B5D5500E5DFC0 /* WebViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06726B541C1B5D5500E5DFC0 /* WebViewDelegate.swift */; };
+		063ACAD51C25CDAE004CB5E3 /* AutomatedWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = 063ACAD41C25CDAE004CB5E3 /* AutomatedWebView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		063ACADA1C25CDF1004CB5E3 /* WebViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06726B541C1B5D5500E5DFC0 /* WebViewDelegate.swift */; };
+		063ACADB1C25CDF1004CB5E3 /* StreamScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06DA7E371C1E53FF00DE03BA /* StreamScanner.swift */; };
+		063ACADC1C25CDF1004CB5E3 /* String+stringToJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06DA7E391C1E5CC100DE03BA /* String+stringToJson.swift */; };
+		063ACADE1C25DEBF004CB5E3 /* WebViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06726B541C1B5D5500E5DFC0 /* WebViewDelegate.swift */; };
+		063ACADF1C25DEBF004CB5E3 /* StreamScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06DA7E371C1E53FF00DE03BA /* StreamScanner.swift */; };
+		063ACAE01C25DEBF004CB5E3 /* String+stringToJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06DA7E391C1E5CC100DE03BA /* String+stringToJson.swift */; };
 		06C2E8751B98C96B001AF5B4 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C2E8741B98C96B001AF5B4 /* main.swift */; };
-		06DA7E381C1E53FF00DE03BA /* StreamScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06DA7E371C1E53FF00DE03BA /* StreamScanner.swift */; };
-		06DA7E3A1C1E5CC100DE03BA /* String+stringToJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06DA7E391C1E5CC100DE03BA /* String+stringToJson.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -26,14 +30,24 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		06726B541C1B5D5500E5DFC0 /* WebViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewDelegate.swift; sourceTree = "<group>"; };
+		063ACAD21C25CDAE004CB5E3 /* AutomatedWebView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AutomatedWebView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		063ACAD41C25CDAE004CB5E3 /* AutomatedWebView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AutomatedWebView.h; sourceTree = "<group>"; };
+		063ACAD61C25CDAE004CB5E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		06726B541C1B5D5500E5DFC0 /* WebViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WebViewDelegate.swift; path = "../Swift Army Knife/WebViewDelegate.swift"; sourceTree = "<group>"; };
 		06C2E8711B98C96B001AF5B4 /* Swift Army Knife */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = "Swift Army Knife"; path = sak; sourceTree = BUILT_PRODUCTS_DIR; };
 		06C2E8741B98C96B001AF5B4 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		06DA7E371C1E53FF00DE03BA /* StreamScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamScanner.swift; sourceTree = "<group>"; };
-		06DA7E391C1E5CC100DE03BA /* String+stringToJson.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+stringToJson.swift"; sourceTree = "<group>"; };
+		06DA7E371C1E53FF00DE03BA /* StreamScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StreamScanner.swift; path = "../Swift Army Knife/StreamScanner.swift"; sourceTree = "<group>"; };
+		06DA7E391C1E5CC100DE03BA /* String+stringToJson.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+stringToJson.swift"; path = "../Swift Army Knife/String+stringToJson.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		063ACACE1C25CDAE004CB5E3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		06C2E86E1B98C96B001AF5B4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -44,10 +58,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		063ACAD31C25CDAE004CB5E3 /* AutomatedWebView */ = {
+			isa = PBXGroup;
+			children = (
+				06726B541C1B5D5500E5DFC0 /* WebViewDelegate.swift */,
+				06DA7E371C1E53FF00DE03BA /* StreamScanner.swift */,
+				06DA7E391C1E5CC100DE03BA /* String+stringToJson.swift */,
+				063ACAD41C25CDAE004CB5E3 /* AutomatedWebView.h */,
+				063ACAD61C25CDAE004CB5E3 /* Info.plist */,
+			);
+			path = AutomatedWebView;
+			sourceTree = "<group>";
+		};
 		06C2E8681B98C96B001AF5B4 = {
 			isa = PBXGroup;
 			children = (
 				06C2E8731B98C96B001AF5B4 /* Swift Army Knife */,
+				063ACAD31C25CDAE004CB5E3 /* AutomatedWebView */,
 				06C2E8721B98C96B001AF5B4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -56,6 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				06C2E8711B98C96B001AF5B4 /* Swift Army Knife */,
+				063ACAD21C25CDAE004CB5E3 /* AutomatedWebView.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -64,16 +92,42 @@
 			isa = PBXGroup;
 			children = (
 				06C2E8741B98C96B001AF5B4 /* main.swift */,
-				06726B541C1B5D5500E5DFC0 /* WebViewDelegate.swift */,
-				06DA7E371C1E53FF00DE03BA /* StreamScanner.swift */,
-				06DA7E391C1E5CC100DE03BA /* String+stringToJson.swift */,
 			);
 			path = "Swift Army Knife";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		063ACACF1C25CDAE004CB5E3 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				063ACAD51C25CDAE004CB5E3 /* AutomatedWebView.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
+		063ACAD11C25CDAE004CB5E3 /* AutomatedWebView */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 063ACAD91C25CDAE004CB5E3 /* Build configuration list for PBXNativeTarget "AutomatedWebView" */;
+			buildPhases = (
+				063ACACD1C25CDAE004CB5E3 /* Sources */,
+				063ACACE1C25CDAE004CB5E3 /* Frameworks */,
+				063ACACF1C25CDAE004CB5E3 /* Headers */,
+				063ACAD01C25CDAE004CB5E3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AutomatedWebView;
+			productName = AutomatedWebView;
+			productReference = 063ACAD21C25CDAE004CB5E3 /* AutomatedWebView.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		06C2E8701B98C96B001AF5B4 /* Swift Army Knife */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 06C2E8781B98C96B001AF5B4 /* Build configuration list for PBXNativeTarget "Swift Army Knife" */;
@@ -102,6 +156,9 @@
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Scott Cheezem";
 				TargetAttributes = {
+					063ACAD11C25CDAE004CB5E3 = {
+						CreatedOnToolsVersion = 7.2;
+					};
 					06C2E8701B98C96B001AF5B4 = {
 						CreatedOnToolsVersion = 6.4;
 					};
@@ -120,18 +177,39 @@
 			projectRoot = "";
 			targets = (
 				06C2E8701B98C96B001AF5B4 /* Swift Army Knife */,
+				063ACAD11C25CDAE004CB5E3 /* AutomatedWebView */,
 			);
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		063ACAD01C25CDAE004CB5E3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
+		063ACACD1C25CDAE004CB5E3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				063ACADB1C25CDF1004CB5E3 /* StreamScanner.swift in Sources */,
+				063ACADA1C25CDF1004CB5E3 /* WebViewDelegate.swift in Sources */,
+				063ACADC1C25CDF1004CB5E3 /* String+stringToJson.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		06C2E86D1B98C96B001AF5B4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				06DA7E381C1E53FF00DE03BA /* StreamScanner.swift in Sources */,
-				06726B551C1B5D5500E5DFC0 /* WebViewDelegate.swift in Sources */,
-				06DA7E3A1C1E5CC100DE03BA /* String+stringToJson.swift in Sources */,
+				063ACADE1C25DEBF004CB5E3 /* WebViewDelegate.swift in Sources */,
+				063ACADF1C25DEBF004CB5E3 /* StreamScanner.swift in Sources */,
+				063ACAE01C25DEBF004CB5E3 /* String+stringToJson.swift in Sources */,
 				06C2E8751B98C96B001AF5B4 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -139,6 +217,52 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		063ACAD71C25CDAE004CB5E3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = AutomatedWebView/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = net.throyalwe.AutomatedWebView;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		063ACAD81C25CDAE004CB5E3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = AutomatedWebView/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = net.throyalwe.AutomatedWebView;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		06C2E8761B98C96B001AF5B4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -235,6 +359,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		063ACAD91C25CDAE004CB5E3 /* Build configuration list for PBXNativeTarget "AutomatedWebView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				063ACAD71C25CDAE004CB5E3 /* Debug */,
+				063ACAD81C25CDAE004CB5E3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		06C2E86C1B98C96B001AF5B4 /* Build configuration list for PBXProject "Swift Army Knife" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

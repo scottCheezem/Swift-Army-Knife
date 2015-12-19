@@ -19,7 +19,7 @@ func =~(string:String, regex:String) -> Bool {
     return false
 }
 
-enum WError : ErrorType {
+public enum WError : ErrorType {
     case NoBeginNode
     case NoRegEx
     case NoActions
@@ -27,17 +27,17 @@ enum WError : ErrorType {
 }
 
 
-enum StateKey : String {
+public enum StateKey : String {
     case Begin = "begin"
     case WhenURLMatches = "whenUrlMatches"
 }
 
-enum CommandKey :String {
+public enum CommandKey :String {
     case RegexURL = "regexUrl"
     case Actions = "actions"
 }
 
-enum ActionKey : String {
+public enum ActionKey : String {
     case RunScript = "runScript"
     case SavePicture = "savePicture"
     case SaveWebArchive = "saveWebArcive"
@@ -55,7 +55,7 @@ enum ActionKey : String {
 
 
 //a Key-Value pair representing some atomic thing that can be automated in the page.
-class BrowserAction {
+public class BrowserAction {
     var actionType : ActionKey
     var actionElement : AnyObject
     init(jsonDict : [String:AnyObject]){
@@ -143,10 +143,10 @@ class BrowserAction {
 
 
 // A UrlAction is a regular expression to match on page load, and some actions to take
-class UrlAction {
-    var regExUrlString : String = ""
-    var actions : [BrowserAction] = []
-    init(jsonDict : [String:AnyObject]){
+public class UrlAction {
+    public var regExUrlString : String = ""
+    public var actions : [BrowserAction] = []
+    public init(jsonDict : [String:AnyObject]){
         guard let saferegExUrlString = jsonDict[CommandKey.RegexURL.rawValue] as? String else{
             return
         }
@@ -162,13 +162,13 @@ class UrlAction {
     }
 }
 
-class AutomatedWebView: NSObject,WebFrameLoadDelegate {
+public class AutomatedWebView: NSObject,WebFrameLoadDelegate {
 
-    var currentStep : StateKey = StateKey.Begin
-    var setupAction : UrlAction?
-    var mainAction : [UrlAction]? = []
+    public var currentStep : StateKey = StateKey.Begin
+    public var setupAction : UrlAction?
+    public var mainAction : [UrlAction]? = []
     
-    init(instructionJson: [String:AnyObject]) {
+    public init(instructionJson: [String:AnyObject]) {
 //        debugPrint("initing Automated Webview")
         super.init()
         do {
@@ -196,7 +196,7 @@ class AutomatedWebView: NSObject,WebFrameLoadDelegate {
 
     }
     
-    func webView(sender: WebView!, didFinishLoadForFrame frame: WebFrame!) {
+    public func webView(sender: WebView!, didFinishLoadForFrame frame: WebFrame!) {
         debugPrint("loaded webview with URL:", sender.mainFrameURL)
         
         if currentStep == StateKey.Begin{
