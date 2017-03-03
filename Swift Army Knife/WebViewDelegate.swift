@@ -10,20 +10,20 @@ import Cocoa
 import Foundation
 import WebKit
 
-infix operator =~ {}
+infix operator =~
 func =~(string:String, regex:String) -> Bool {
-    if let range = string.rangeOfString(regex, options:.RegularExpressionSearch){
-        NSLog("matched on :%@",string.substringWithRange(range))
+    if let range = string.range(of: regex, options:.regularExpression){
+        NSLog("matched on :%@",string.substring(with: range))
         return true
     }
     return false
 }
 
-public enum WError : ErrorType {
-    case NoBeginNode
-    case NoRegEx
-    case NoActions
-    case BrowserStartError
+public enum WError : Error {
+    case noBeginNode
+    case noRegEx
+    case noActions
+    case browserStartError
 }
 
 
@@ -57,13 +57,13 @@ public enum ActionKey : String {
 
 
 //a Key-Value pair representing some atomic thing that can be automated in the page.
-public class BrowserAction {
+open class BrowserAction {
     
     var actionType : ActionKey
     var actionElement : AnyObject
     init(jsonDict : [String:AnyObject]){
         actionType = .Nil
-        actionElement = 0
+        actionElement = 0 as AnyObject
         for (k,v) in jsonDict{
             actionType = ActionKey.init(rawValue: k as String)!
             actionElement = v
@@ -71,10 +71,10 @@ public class BrowserAction {
     }
     
     //this could be in an extension to a protocol or something...
-    func runAction(webview:WebView){
+    func runAction(_ webview:WebView){
         switch actionType {
         case .SavePicture:
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            DispatchQueue.main.async(execute: { () -> Void in
                 
                 webview.mainFrame.frameView.allowsScrolling = false//this might need to be set by default.
                 
@@ -83,18 +83,18 @@ public class BrowserAction {
                 
                 
                 
-                guard let imagerep = webview.bitmapImageRepForCachingDisplayInRect(webview.frame) else{
+                guard let imagerep = webview.bitmapImageRepForCachingDisplay(in: webview.frame) else{
                     return
                 }
-                webview.cacheDisplayInRect(webview.frame, toBitmapImageRep: imagerep)
+                webview.cacheDisplay(in: webview.frame, to: imagerep)
                 
                 //            let imageOfWebView = NSImage(size: webview.frame.size)
                 //            imageOfWebView.addRepresentation(imagerep!)
-                let imageData = imagerep.representationUsingType(.NSPNGFileType, properties: [:])
+                let imageData = imagerep.representation(using: .PNG, properties: [:])
                 
                 
                 do {
-                    try imageData?.writeToFile(self.actionElement as! String, options: .AtomicWrite)
+                    try imageData?.write(to: URL(fileURLWithPath: self.actionElement as! String), options: .atomicWrite)
                 }catch let e as NSError{
                     NSLog("%@",e)
                 }
@@ -103,9 +103,9 @@ public class BrowserAction {
             
             break;
         case .RunScript:
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                let result = webview.stringByEvaluatingJavaScriptFromString(self.actionElement as! String)
-                if result.characters.count > 0 {
+            DispatchQueue.main.async(execute: { () -> Void in
+                let result = webview.stringByEvaluatingJavaScript(from: self.actionElement as! String)
+                if (result?.characters.count)! > 0 {
 //                    debugPrint(result)
                     print(result)
                 }
@@ -113,45 +113,45 @@ public class BrowserAction {
             })
             break;
         case .InnerText:
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                print(webview.mainFrame.DOMDocument.documentElement.innerText)
+            DispatchQueue.main.async(execute: { () -> Void in
+                print(webview.mainFrame.domDocument.documentElement.innerText)
             });
             break;
         case .OuterHTML:
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                print(webview.mainFrame.DOMDocument.documentElement.outerHTML)
+            DispatchQueue.main.async(execute: { () -> Void in
+                print(webview.mainFrame.domDocument.documentElement.outerHTML)
             })
         case .Exit:
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            DispatchQueue.main.async(execute: { () -> Void in
                 CFRunLoopStop(CFRunLoopGetCurrent())
                 exit(EXIT_SUCCESS)
             });
             break;
         case .Wait:
             //this no longer seems needed, but would be nice to have in case this is ever a legit testing enginge.
-            let delay:dispatch_time_t = UInt64(actionElement as! Int)
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (Int64)(delay * NSEC_PER_SEC)), dispatch_get_main_queue(), { () -> Void in
+            let delay:DispatchTime = UInt64(actionElement as! Int)
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double((Int64)(delay * NSEC_PER_SEC)) / Double(NSEC_PER_SEC), execute: { () -> Void in
                 NSLog("done waiting");
             })
         case .DomQueryAll:
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                let domNodes = webview.mainFrame.DOMDocument.querySelectorAll(self.actionElement as! String)
-                for  index in 0...domNodes.length-1{
-                    let domElement = domNodes.item(index) as! DOMElement
+            DispatchQueue.main.async(execute: { () -> Void in
+                let domNodes = webview.mainFrame.domDocument.querySelectorAll(self.actionElement as! String)
+                for  index in 0...(domNodes?.length)!-1{
+                    let domElement = domNodes?.item(index) as! DOMElement
                     print(domElement.innerHTML)
                 }
             })
             break;
         case .DomQuery:
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                let domElement = webview.mainFrame.DOMDocument.querySelector(self.actionElement as! String)
-                print(domElement.innerHTML)
+            DispatchQueue.main.async(execute: { () -> Void in
+                let domElement = webview.mainFrame.domDocument.querySelector(self.actionElement as! String)
+                print(domElement?.innerHTML)
             })
             break
         case .DomQueryAllText:
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                let domNodes = webview.mainFrame.DOMDocument.querySelectorAll(self.actionElement as! String)
-                for  index in 0...domNodes.length{
+            DispatchQueue.main.async(execute: { () -> Void in
+                let domNodes = webview.mainFrame.domDocument.querySelectorAll(self.actionElement as! String)
+                for  index in 0...domNodes?.length{
                     guard let domElement = domNodes.item(index) as? DOMElement else{
                         continue
                     }
@@ -160,9 +160,9 @@ public class BrowserAction {
             })
             break;
         case .DomQueryText:
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                let domElement = webview.mainFrame.DOMDocument.querySelector(self.actionElement as! String)
-                print(domElement.innerText)
+            DispatchQueue.main.async(execute: { () -> Void in
+                let domElement = webview.mainFrame.domDocument.querySelector(self.actionElement as! String)
+                print(domElement?.innerText)
             })
             break
 
@@ -176,9 +176,9 @@ public class BrowserAction {
 
 
 // A UrlAction is a regular expression to match on page load, and some actions to take
-public class UrlAction {
-    public var regExUrlString : String = ""
-    public var actions : [BrowserAction] = []
+open class UrlAction {
+    open var regExUrlString : String = ""
+    open var actions : [BrowserAction] = []
     public init(jsonDict : [String:AnyObject]){
         guard let saferegExUrlString = jsonDict[CommandKey.RegexURL.rawValue] as? String else{
             return
@@ -195,11 +195,11 @@ public class UrlAction {
     }
 }
 
-public class AutomatedWebView: NSObject,WebFrameLoadDelegate {
+open class AutomatedWebView: NSObject,WebFrameLoadDelegate {
 
-    public var currentStep : StateKey = StateKey.Begin
-    public var setupAction : UrlAction?
-    public var mainAction : [UrlAction]? = []
+    open var currentStep : StateKey = StateKey.Begin
+    open var setupAction : UrlAction?
+    open var mainAction : [UrlAction]? = []
     
     public init(instructionJson: [String:AnyObject]) {
         super.init()
@@ -210,15 +210,15 @@ public class AutomatedWebView: NSObject,WebFrameLoadDelegate {
         }
     }
     
-    func setupWithInput(instructionJson: [String:AnyObject]) throws {
+    func setupWithInput(_ instructionJson: [String:AnyObject]) throws {
         guard let safeBeginDict = instructionJson[StateKey.Begin.rawValue] as? [String:AnyObject] else{
-            throw WError.NoBeginNode
+            throw WError.noBeginNode
         }
         
         setupAction = UrlAction(jsonDict: safeBeginDict)
         
         guard let safeMainLoopDict = instructionJson[StateKey.WhenURLMatches.rawValue] as? [[String:AnyObject]] else {
-            throw WError.NoRegEx
+            throw WError.noRegEx
         }
         
         for urlActionDict in safeMainLoopDict{
@@ -226,7 +226,7 @@ public class AutomatedWebView: NSObject,WebFrameLoadDelegate {
         }
     }
     
-    public func webView(sender: WebView!, didFinishLoadForFrame frame: WebFrame!) {
+    open func webView(_ sender: WebView!, didFinishLoadFor frame: WebFrame!) {
         NSLog("loaded webview with URL:%@", sender.mainFrameURL)
         if currentStep == StateKey.Begin{
             for browserAction in (setupAction?.actions)!{

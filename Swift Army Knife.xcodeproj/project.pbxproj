@@ -34,7 +34,7 @@
 		063ACAD41C25CDAE004CB5E3 /* AutomatedWebView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AutomatedWebView.h; sourceTree = "<group>"; };
 		063ACAD61C25CDAE004CB5E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		06726B541C1B5D5500E5DFC0 /* WebViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WebViewDelegate.swift; path = "../Swift Army Knife/WebViewDelegate.swift"; sourceTree = "<group>"; };
-		06C2E8711B98C96B001AF5B4 /* Swift Army Knife */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = "Swift Army Knife"; path = sak; sourceTree = BUILT_PRODUCTS_DIR; };
+		06C2E8711B98C96B001AF5B4 /* sak */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = sak; sourceTree = BUILT_PRODUCTS_DIR; };
 		06C2E8741B98C96B001AF5B4 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		06DA7E371C1E53FF00DE03BA /* StreamScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StreamScanner.swift; path = "../Swift Army Knife/StreamScanner.swift"; sourceTree = "<group>"; };
 		06DA7E391C1E5CC100DE03BA /* String+stringToJson.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+stringToJson.swift"; path = "../Swift Army Knife/String+stringToJson.swift"; sourceTree = "<group>"; };
@@ -82,7 +82,7 @@
 		06C2E8721B98C96B001AF5B4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				06C2E8711B98C96B001AF5B4 /* Swift Army Knife */,
+				06C2E8711B98C96B001AF5B4 /* sak */,
 				063ACAD21C25CDAE004CB5E3 /* AutomatedWebView.framework */,
 			);
 			name = Products;
@@ -142,7 +142,7 @@
 			);
 			name = "Swift Army Knife";
 			productName = webThumb;
-			productReference = 06C2E8711B98C96B001AF5B4 /* Swift Army Knife */;
+			productReference = 06C2E8711B98C96B001AF5B4 /* sak */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -158,9 +158,11 @@
 				TargetAttributes = {
 					063ACAD11C25CDAE004CB5E3 = {
 						CreatedOnToolsVersion = 7.2;
+						LastSwiftMigration = 0820;
 					};
 					06C2E8701B98C96B001AF5B4 = {
 						CreatedOnToolsVersion = 6.4;
+						LastSwiftMigration = 0820;
 					};
 				};
 			};
@@ -235,6 +237,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = net.throyalwe.AutomatedWebView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -258,6 +261,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = net.throyalwe.AutomatedWebView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -346,6 +350,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = sak;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -353,6 +358,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = sak;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -366,6 +372,7 @@
 				063ACAD81C25CDAE004CB5E3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		06C2E86C1B98C96B001AF5B4 /* Build configuration list for PBXProject "Swift Army Knife" */ = {
 			isa = XCConfigurationList;

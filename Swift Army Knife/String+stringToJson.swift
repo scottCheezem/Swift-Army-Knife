@@ -11,9 +11,9 @@ import Foundation
 public extension String {
     
     public func jsonStringToDict() -> [String:AnyObject]? {
-        if let data = self.dataUsingEncoding(NSUTF8StringEncoding){
+        if let data = self.data(using: String.Encoding.utf8){
             do {
-                let json = try  NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments) as? [String:AnyObject]
+                let json = try  JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) as? [String:AnyObject]
                 return json
             }catch let e as NSError{
                 debugPrint(e)
