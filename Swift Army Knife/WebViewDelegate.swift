@@ -129,10 +129,16 @@ open class BrowserAction {
             break;
         case .Wait:
             //this no longer seems needed, but would be nice to have in case this is ever a legit testing enginge.
-            let delay:DispatchTime = UInt64(actionElement as! Int)
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double((Int64)(delay * NSEC_PER_SEC)) / Double(NSEC_PER_SEC), execute: { () -> Void in
-                NSLog("done waiting");
+//            let delay:DispatchTime = UInt64(actionElement as! Int)
+            let delayCount = NSNumber(value: actionElement as! Int).uint64Value * NSEC_PER_SEC
+//                Int(actionElement as! NSNumber)
+            let delay = DispatchTime(uptimeNanoseconds: delayCount)
+            DispatchQueue.main.asyncAfter(deadline: delay, execute: { 
+                NSLog("done waiting")
             })
+//            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double((Int64)(delay * NSEC_PER_SEC)) / Double(NSEC_PER_SEC), execute: { () -> Void in
+//                NSLog("done waiting");
+//            })
         case .DomQueryAll:
             DispatchQueue.main.async(execute: { () -> Void in
                 let domNodes = webview.mainFrame.domDocument.querySelectorAll(self.actionElement as! String)
@@ -150,14 +156,17 @@ open class BrowserAction {
             break
         case .DomQueryAllText:
             DispatchQueue.main.async(execute: { () -> Void in
-                let domNodes = webview.mainFrame.domDocument.querySelectorAll(self.actionElement as! String)
-                for  index in 0...domNodes?.length{
+//                let domeNodes = webview.mainFrame.domDocument.querySelectorAll(self.actionElement as! String)
+                if let domNodes = webview.mainFrame.domDocument.querySelectorAll(self.actionElement as! String){
+                for  index in 0...domNodes.length{
                     guard let domElement = domNodes.item(index) as? DOMElement else{
                         continue
                     }
                     print(domElement.innerText)
                 }
+                }
             })
+            
             break;
         case .DomQueryText:
             DispatchQueue.main.async(execute: { () -> Void in
