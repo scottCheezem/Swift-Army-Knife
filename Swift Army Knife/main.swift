@@ -29,7 +29,7 @@ if CommandLine.arguments.count > 1{
     
     
 }else{
-    let stdin = StreamScanner(source: FileHandle.withStandardInput, delimiters: CharacterSet.newlines)
+    let stdin = StreamScanner(source: FileHandle.standardInput, delimiters: CharacterSet.newlines)
     
     while var a:String = stdin.read() {
         fileContent += a+"\n"
