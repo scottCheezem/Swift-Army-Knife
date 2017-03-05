@@ -104,9 +104,7 @@ open class BrowserAction {
             break;
         case .RunScript:
             DispatchQueue.main.async(execute: { () -> Void in
-                let result = webview.stringByEvaluatingJavaScript(from: self.actionElement as! String)
-                if (result?.characters.count)! > 0 {
-//                    debugPrint(result)
+                if let result = webview.stringByEvaluatingJavaScript(from: self.actionElement as! String), result.characters.count > 0 {
                     print(result)
                 }
 
@@ -150,8 +148,9 @@ open class BrowserAction {
             break;
         case .DomQuery:
             DispatchQueue.main.async(execute: { () -> Void in
-                let domElement = webview.mainFrame.domDocument.querySelector(self.actionElement as! String)
-                print(domElement?.innerHTML)
+                if let domElement = webview.mainFrame.domDocument.querySelector(self.actionElement as! String){
+                    print(domElement.innerHTML)
+                }
             })
             break
         case .DomQueryAllText:
@@ -170,8 +169,9 @@ open class BrowserAction {
             break;
         case .DomQueryText:
             DispatchQueue.main.async(execute: { () -> Void in
-                let domElement = webview.mainFrame.domDocument.querySelector(self.actionElement as! String)
-                print(domElement?.innerText)
+                if let domElement = webview.mainFrame.domDocument.querySelector(self.actionElement as! String){
+                    print(domElement.innerText)
+                }
             })
             break
 
