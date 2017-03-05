@@ -130,6 +130,7 @@ open class BrowserAction {
 //            let delay:DispatchTime = UInt64(actionElement as! Int)
             let delayCount = NSNumber(value: actionElement as! Int).uint64Value * NSEC_PER_SEC
 //                Int(actionElement as! NSNumber)
+            debugPrint(delayCount)
             let delay = DispatchTime(uptimeNanoseconds: delayCount)
             DispatchQueue.main.asyncAfter(deadline: delay, execute: { 
                 NSLog("done waiting")
