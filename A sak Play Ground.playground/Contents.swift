@@ -25,7 +25,7 @@ if let filePath = Bundle.main.path(forResource: "getTheFlinstones", ofType: "jso
             print(startingUrlString)
             let startingUrl = URL(string:startingUrlString)
             let startingUrlRequest = URLRequest(url: startingUrl!)
-            webView.shouldUpdateWhileOffscreen = true
+            webView.shouldUpdateWhileOffscreen = false
             webView.frameLoadDelegate = webViewLoadDelegate
         
         
