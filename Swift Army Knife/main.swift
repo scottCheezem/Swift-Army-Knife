@@ -40,7 +40,7 @@ var commandDict = fileContent.jsonStringToDict()! as [String:AnyObject]
 
 let webViewLoadDelegate = AutomatedWebView(instructionJson: commandDict)
 let webView = WebView()
-webView.shouldUpdateWhileOffscreen = true
+//webView.shouldUpdateWhileOffscreen = true
 //webView.frame = CGRectMake(0, 0, 1000, 1000) // this will be for saving images of the page , or pdfs//maybe to a resize to match the content size
 
 let startingUrlString = webViewLoadDelegate.setupAction?.regExUrlString
@@ -48,9 +48,9 @@ let startingUrl = URL(string : startingUrlString!)
 let startingUrlRequest = URLRequest(url: startingUrl!)
 
 
-//debugPrint("loading ", startingUrlString)
+debugPrint("loading ", startingUrlString!)
 webView.mainFrame.load(startingUrlRequest)
-webView.frameLoadDelegate = webViewLoadDelegate
+//webView.frameLoadDelegate = webViewLoadDelegate
 
 
 

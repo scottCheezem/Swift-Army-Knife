@@ -128,10 +128,14 @@ open class BrowserAction {
         case .Wait:
             //this no longer seems needed, but would be nice to have in case this is ever a legit testing enginge.
 //            let delay:DispatchTime = UInt64(actionElement as! Int)
-            let delayCount = NSNumber(value: actionElement as! Int).uint64Value * NSEC_PER_SEC
+            let delayCount = NSNumber(value: actionElement as! Int).uint64Value// * NSEC_PER_SEC
 //                Int(actionElement as! NSNumber)
             debugPrint(delayCount)
-            let delay = DispatchTime(uptimeNanoseconds: delayCount)
+            
+            
+            
+//            DispatchTime(uptimeNanoseconds: delayCount)
+            let delay = DispatchTime.now() + Double((Int64)(delayCount * NSEC_PER_SEC)) / Double(NSEC_PER_SEC)
             DispatchQueue.main.asyncAfter(deadline: delay, execute: { 
                 NSLog("done waiting")
             })
@@ -158,12 +162,12 @@ open class BrowserAction {
             DispatchQueue.main.async(execute: { () -> Void in
 //                let domeNodes = webview.mainFrame.domDocument.querySelectorAll(self.actionElement as! String)
                 if let domNodes = webview.mainFrame.domDocument.querySelectorAll(self.actionElement as! String){
-                for  index in 0...domNodes.length{
-                    guard let domElement = domNodes.item(index) as? DOMElement else{
-                        continue
+                    for  index in 0...domNodes.length{
+                        guard let domElement = domNodes.item(index) as? DOMElement else{
+                            continue
+                        }
+                        print(domElement.innerText)
                     }
-                    print(domElement.innerText)
-                }
                 }
             })
             
