@@ -216,12 +216,26 @@ open class AutomatedWebView: NSObject,WebFrameLoadDelegate {
     
     public init(instructionJson: [String:AnyObject]) {
         super.init()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(progressFinished), name:.WebViewProgressFinished , object: nil)
+        
         do {
             try setupWithInput(instructionJson)
         }catch let e as NSError{
             NSLog("%@", e)
         }
     }
+    
+    func progressFinished(_ sender:NSNotification){
+        if let webView = sender.object as? WebView{
+            let url = webView.mainFrameURL
+            debugPrint(url)
+            let progress = webView.estimatedProgress
+            NSLog("%d", progress)
+        }
+    }
+    
+    
     
     func setupWithInput(_ instructionJson: [String:AnyObject]) throws {
         guard let safeBeginDict = instructionJson[StateKey.Begin.rawValue] as? [String:AnyObject] else{
