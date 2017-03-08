@@ -128,19 +128,18 @@ open class BrowserAction {
         case .Wait:
             //this no longer seems needed, but would be nice to have in case this is ever a legit testing enginge.
 //            let delay:DispatchTime = UInt64(actionElement as! Int)
-            let delayCount = NSNumber(value: actionElement as! Int).uint64Value// * NSEC_PER_SEC
+            let delayCount = NSNumber(value: actionElement as! Int).uint32Value// * NSEC_PER_SEC
 //                Int(actionElement as! NSNumber)
             debugPrint(delayCount)
             
             
+            sleep(delayCount)
+            
             
 //            DispatchTime(uptimeNanoseconds: delayCount)
-            let delay = DispatchTime.now() + Double((Int64)(delayCount * NSEC_PER_SEC)) / Double(NSEC_PER_SEC)
-            DispatchQueue.main.asyncAfter(deadline: delay, execute: { 
-                NSLog("done waiting")
-            })
-//            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double((Int64)(delay * NSEC_PER_SEC)) / Double(NSEC_PER_SEC), execute: { () -> Void in
-//                NSLog("done waiting");
+//            let delay = DispatchTime.now() + Double((Int64)(delayCount * NSEC_PER_SEC)) / Double(NSEC_PER_SEC)
+//            DispatchQueue.main.asyncAfter(deadline: delay, execute: { 
+            NSLog("done waiting")                
 //            })
         case .DomQueryAll:
             DispatchQueue.main.async(execute: { () -> Void in
@@ -248,12 +247,13 @@ open class AutomatedWebView: NSObject,WebFrameLoadDelegate {
             }
             currentStep = StateKey.WhenURLMatches
         }else if currentStep == StateKey.WhenURLMatches{
-            for urlAction in mainAction! where sender.mainFrameURL =~ urlAction.regExUrlString {
-                for browserAction in urlAction.actions {
-                    browserAction.runAction(sender)
-                }
+            if let mainActions = mainAction {
+                for urlAction in mainActions where sender.mainFrameURL =~ urlAction.regExUrlString {
+                    for browserAction in urlAction.actions {
+                        browserAction.runAction(sender)
+                    }
+                }            
             }
-            
         }
     }
     

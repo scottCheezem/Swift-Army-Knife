@@ -1,5 +1,18 @@
 {
     "begin":{
-        "regexUrl":"http://readcomiconline.to/Comic/The-Flintstones/Issue-4?id=91654&readType=1"    
-    }
+        "regexUrl":"http://readcomiconline.to/Comic/The-Flintstones/Issue-4?id=91654&readType=1",
+        "actions": [
+                    {"wait":10}
+                    ]
+    },
+    "whenUrlMatches":[
+    {"regexUrl":"http://readcomiconline.to/Comic/The-Flintstones/Issue-4\\?id=91654&readType=1",
+            "actions":[
+                    {"wait":10},
+                       {"savePicture":"/Users/user/Desktop/test.png"},
+                       {"Exit":0}
+                    ]
+              
+      }
+                      ]
 }

@@ -51,16 +51,6 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "06C2E8701B98C96B001AF5B4"
-            BuildableName = "sak"
-            BlueprintName = "Swift Army Knife"
-            ReferencedContainer = "container:Swift Army Knife.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
